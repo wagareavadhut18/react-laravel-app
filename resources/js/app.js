@@ -5,6 +5,12 @@
  */
 
 require('./bootstrap');
+require('../assets/js/jquery-1.11.0.min.js');
+require('../assets/js/jquery-migrate-1.2.1.min.js');
+require('../assets/js/bootstrap.bundle.min.js');
+require('../assets/js/templatemo.js');
+require('../assets/js/custom.js');
+
 
 /**
  * Next, we will create a fresh React component instance and attach it to
