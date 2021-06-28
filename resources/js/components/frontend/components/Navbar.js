@@ -46,7 +46,7 @@ function Navbar(){
                                         <Link className="nav-link" to="/shop">Shop</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/admin/contact">Contact</Link>
+                                        <Link className="nav-link" to="/contact">Contact</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -66,7 +66,7 @@ function Navbar(){
                                     <i className="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                                     <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
                                 </a>
-                                <a className="nav-icon position-relative text-decoration-none" href="#">
+                                <a className="nav-icon position-relative text-decoration-none" href="/admin">
                                     <i className="fa fa-fw fa-user text-dark mr-3"></i>
                                     <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                                 </a>
