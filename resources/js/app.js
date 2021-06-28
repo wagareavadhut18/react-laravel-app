@@ -19,3 +19,5 @@ require('../assets/js/custom.js');
  */
 
 require('./components/App');
+
+require('./components/Admin');
