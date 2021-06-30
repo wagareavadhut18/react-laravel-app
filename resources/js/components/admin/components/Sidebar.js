@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 function Sidebar() {
     return(
         <>
             {/* Main Sidebar Container */}
             <aside className="main-sidebar sidebar-light-primary elevation-4">
                 {/* Brand Logo */}
-                <a href="index3.html" className="brand-link">
-                    <img src="admin-lte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
+                <a href="/admin" className="brand-link">
+                    <img src="../admin-lte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
                     <span className="brand-text font-weight-light">AdminLTE 3</span>
                 </a>
                 {/* Sidebar */}
@@ -13,7 +15,7 @@ function Sidebar() {
                     {/* Sidebar user panel (optional) */}
                     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="image">
-                        <img src="admin-lte/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
+                        <img src="../admin-lte/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div className="info">
                         <a href="#" className="d-block">Alexander Pierce</a>
@@ -266,28 +268,16 @@ function Sidebar() {
                         <a href="#" className="nav-link">
                             <i className="nav-icon fas fa-table" />
                             <p>
-                            Tables
+                            Products
                             <i className="fas fa-angle-left right" />
                             </p>
                         </a>
                         <ul className="nav nav-treeview">
                             <li className="nav-item">
-                            <a href="pages/tables/simple.html" className="nav-link">
+                            <Link to="/admin/product" className="nav-link">
                                 <i className="far fa-circle nav-icon" />
-                                <p>Simple Tables</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/tables/data.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>DataTables</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/tables/jsgrid.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>jsGrid</p>
-                            </a>
+                                <p>All Products</p>
+                            </Link>
                             </li>
                         </ul>
                         </li>

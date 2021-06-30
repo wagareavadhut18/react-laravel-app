@@ -1,5 +1,5 @@
-function Footer(){
-    return(
+function Footer() {
+    return (
         <>
             {/* /.content-wrapper */}
             <footer className="main-footer">
@@ -9,6 +9,13 @@ function Footer(){
                     <b>Version</b> 3.1.0
                 </div>
             </footer>
+
+            {/* Control Sidebar */}
+            <aside className="control-sidebar control-sidebar-dark">
+                {/* Control sidebar content goes here */}
+            </aside>
+            {/* /.control-sidebar */}
+
         </>
     );
 }

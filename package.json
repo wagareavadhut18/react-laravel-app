@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "admin-lte": "^3.1.0",
-        "react-router-dom": "^5.2.0"
+        "formik": "^2.2.9",
+        "react-router-dom": "^5.2.0",
+        "yup": "^0.32.9"
     }
 }

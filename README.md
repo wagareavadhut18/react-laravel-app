@@ -10,6 +10,71 @@
 
 -npm run dev
 
+- In resources/js/components/components/ folder create your App.js for react like
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+function App() {
+    return (
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <div className="card">
+                        <div className="card-header">App Component</div>
+                        <div className="card-body">I'm an app component!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default App;
+
+if (document.getElementById('app')) {
+    ReactDOM.render(<App />, document.getElementById('app'));
+}
+
+- Next step is import that App.js in resources/js/app.js as follows
+
+require('./components/App');
+
+- In routes/web.php add following route
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+- The resources/views/welcome.blade.php file modify by following code
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <title>Laravel project</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Nunito', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    </body>
+</html>
+
+- Then last fire following command to publish all css and js to public folder
+
+  npm run dev
+
+  php artisan serve
+
+
 ## Passport installation
 
 https://laravel.com/docs/8.x/passport
@@ -174,7 +239,119 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register']);
 Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:api');
 
+## Formik validation installation:
 
+npm install formik;
 
+npm i yup;
 
+- Use in react component as follows:-
 
+import React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
+function Login() {
+    return (
+        <>
+            <Formik
+                initialValues={{ email: "", password: "" }}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        console.log("Values....", values);
+                    }, 500);
+                }}
+                // validations.....................................
+                validationSchema={Yup.object().shape({
+                    email: Yup.string()
+                        .email("Email must be a valid email").required("Email is required"),
+                    password: Yup.string()
+                        .required("Password is required")
+                        .min(4, "Password shold be minimun 4 characters")
+                        .matches(/(?=.*[0-9])/, "Password contain number only"),
+                })}
+            >
+                {(props) => {
+                    const {
+                        values,
+                        touched,
+                        errors,
+                        isSubmiting,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                    } = props;
+                    return (
+                        <div className="hold-transition login-page pt-5 pb-5">
+                            <div className="login-box">
+                                <div className="login-logo">
+                                    <a href="../../index2.html"><b>Admin</b></a>
+                                </div>
+                                {/* /.login-logo */}
+                                <div className="card">
+                                    <div className="card-body login-card-body">
+                                        <p className="login-box-msg">Sign in to Continue</p>
+                                        <form autoComplete="off" onSubmit={handleSubmit}>
+                                            <div className="input-group">
+                                                <input
+                                                    type="text"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    className="form-control"
+                                                    name="email"
+                                                    value={values.email}
+                                                    placeholder="Email"
+                                                ></input>
+                                                <div className="input-group-append">
+                                                    <div className="input-group-text">
+                                                        <span className="fas fa-envelope" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {errors.email && touched.email && (
+                                                <span className="text-danger">
+                                                    {errors.email}
+                                                </span>
+                                            )}
+                                            <div className="input-group mt-3">
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    name="password"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.password}
+                                                    placeholder="Password"
+                                                ></input>
+                                                <div className="input-group-append">
+                                                    <div className="input-group-text">
+                                                        <span className="fas fa-lock" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {errors.password && touched.password && (
+                                                <span className="text-danger">
+                                                    {errors.password}
+                                                </span>
+                                            )}
+                                            <div className="row">
+                                                {/* /.col */}
+                                                <div className="col-12 mt-3">
+                                                    <button type="submit" className="btn btn-primary btn-block" disabled={isSubmiting}>Sign In</button>
+                                                </div>
+                                                {/* /.col */}
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {/* /.login-card-body */}
+                                </div>
+                            </div>
+                            {/* /.login-box */}
+                        </div>
+                    );
+                }}
+            </Formik>
+        </>
+    );
+}
+
+export default Login;
