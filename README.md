@@ -355,3 +355,60 @@ function Login() {
 }
 
 export default Login;
+
+
+## Make seeder in laravel
+
+php artisan make:seeder UserSeeder
+
+- In UserSeeder.php
+
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@yopmail.com',
+            'user_type' => 'admin',
+            'password' => Hash::make('password')
+        ]);
+    }
+}
+
+
+- In DatabaseSeeder.php
+
+/**
+    * Seed the application's database.
+    *
+    * @return void
+    */
+public function run()
+{
+    // \App\Models\User::factory(10)->create();
+    $this->call([
+        UserSeeder::class,
+    ]);
+}
+
+- To run specific migration -
+
+php artisan migrate --path=/database/migrations/my_migration.php
+
+- To run down() method of migration use:
+
+php artisan migrate:rollback --path=/database/migrations/my_migration.php
