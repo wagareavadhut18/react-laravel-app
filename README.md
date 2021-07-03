@@ -412,3 +412,117 @@ php artisan migrate --path=/database/migrations/my_migration.php
 - To run down() method of migration use:
 
 php artisan migrate:rollback --path=/database/migrations/my_migration.php
+
+## Install react-redux :
+
+npm i react-redux
+
+npm i redux
+
+npm i redux-thunk
+
+## Login authentication in react laravel
+
+- Add the following code in Login.js under the formik's validation on submit method
+
+var middlefunction = loginmiddleware({email:values.email,password:values.password});
+props.dispatch(middlefunction);
+
+- Above code is for transfering data from login.js to middleware.js file login function
+
+- Add following code in middleware for login-
+
+import axios from "axios"
+export function loginmiddleware(data){
+    return function(dispatch) {
+            dispatch({
+                type:"LOGIN_STARTED"
+            })
+            axios({
+                url: "http://127.0.0.1:8000/api/login",
+                method: 'post',
+                data:data
+            }).then(response => {
+                console.log("login success",response);
+                if (response.data.token) {
+                    dispatch({
+                        type: "LOGIN_SUCCESS",
+                        payload: {
+                            token: response.data.token,
+                        }
+                    })
+                }
+            }, err => {
+                dispatch({
+                    type: "LOGIN_FAIL"
+                })
+            })
+    }
+}
+
+- Make AdminReducer.js by following code for dispatches
+
+function AdminReducer(state={
+    isloggedin:false,
+    // token:localStorage.token,
+    // username:localStorage.username
+    },action){
+        switch(action.type){
+            case "LOGIN_STARTED" :{
+                state = {...state}
+                state["isloading"]  = true
+                return state
+            }
+            case "LOGIN_SUCCESS" :{
+              state = {...state}
+              state["isloading"] = false
+              state.isloggedin = true
+              return state
+            }
+            case "LOGIN_FAIL" :{
+                state = {...state}
+                state["isloading"] = false
+                return state
+            }
+            case"LOGOUT" :{
+                state = {...state}
+                // localStorage.clear()
+                state.isloggedin = false
+                // state.username = undefined
+                return state
+                
+            }
+            default:return state
+        }
+}
+export default AdminReducer
+
+- Add following code in store.js file for combining all the reducers:
+
+import {createStore , combineReducers , applyMiddleware} from "redux"
+import AdminReducer from "./AdminReducer";
+
+var reducers = combineReducers({AdminReducer});
+
+let store  =  createStore(reducers, applyMiddleware(middle, thunk));
+
+- Add the following code for exporting login.js to connect with middleware and reducer file
+
+import { withRouter } from 'react-router-dom';
+
+Login =connect(function(state,props){
+    if(state.AdminReducer?.isloggedin===true){
+        window.location.href = "/admin/dashboard";
+    }else{
+        return {
+            isloading:state.AdminReducer?.isloading
+        }
+    }
+})(Login) 
+
+export default withRouter(Login);//syntax for redux and dispatch
+
+- In routes/web.php add the following code for managing different urls:
+
+Route::view('/admin/{path?}', 'admin');
+

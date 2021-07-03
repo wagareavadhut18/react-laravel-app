@@ -1,15 +1,23 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-function Login() {
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {loginmiddleware} from "../../reduxstore/middlewares";
+
+
+function Login(props) {
     return (
         <>
             <Formik
                 initialValues={{ email: "", password: "" }}
                 onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        console.log("Values....", values);
-                    }, 500);
+                    // setTimeout(() => {
+                    //     console.log("Values....", values);
+                    // }, 500);
+                    var middlefunction = loginmiddleware({email:values.email,password:values.password});
+                    props.dispatch(middlefunction);
+                    // console.log(props);
                 }}
                 // validations.....................................
                 validationSchema={Yup.object().shape({
@@ -18,7 +26,7 @@ function Login() {
                     password: Yup.string()
                         .required("Password is required")
                         .min(4, "Password shold be minimun 4 characters")
-                        .matches(/(?=.*[0-9])/, "Password contain number only"),
+                        // .matches(/(?=.*[0-9])/, "Password contain number only"),
                 })}
             >
                 {(props) => {
@@ -108,4 +116,20 @@ function Login() {
     );
 }
 
-export default Login;
+
+Login =connect(function(state,props){
+    // console.log("connect ki state hai",state,"connect props===",props);
+    if(state.AdminReducer?.isloggedin===true){
+        window.location.href = "/admin/dashboard";
+    }else{
+        return {
+            isloading:state.AdminReducer?.isloading
+        }
+    }
+})(Login) 
+
+export default withRouter(Login);//syntax for redux and dispatch
+
+
+// export default connect()(Login);
+
