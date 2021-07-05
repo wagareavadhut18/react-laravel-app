@@ -1,5 +1,5 @@
 function AdminReducer(state={
-    isloggedin:localStorage.loginstatus?true:false,
+    isloggedin:localStorage.loginstatus,
     // token:localStorage.token,
     // username:localStorage.username
     loginstatus:localStorage.loginstatus,
@@ -13,7 +13,7 @@ function AdminReducer(state={
             case "LOGIN_SUCCESS" :{
               state = {...state}
               state["isloading"] = false
-              state.isloggedin = true
+              state.isloggedin = "true"
               return state
             }
             case "LOGIN_FAIL" :{
@@ -23,8 +23,7 @@ function AdminReducer(state={
             }
             case"LOGOUT" :{
                 state = {...state}
-                // localStorage.clear()
-                state.isloggedin = false
+                state.isloggedin = ''
                 // state.username = undefined
                 return state
                 

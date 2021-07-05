@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import {logoutmiddleware} from "../../reduxstore/middlewares";
 
-function Sidebar() {
+function Sidebar(props) {
+
+    let logout = () =>{
+        // alert("logout hello");
+        var middlefunction = logoutmiddleware();
+        props.dispatch(middlefunction);
+    }
+
     return(
         <>
             {/* Main Sidebar Container */}
@@ -171,63 +180,12 @@ function Sidebar() {
                         </ul>
                         </li>
                         <li className="nav-item">
-                        <a href="#" className="nav-link">
-                            <i className="nav-icon fas fa-tree" />
+                        <a href="#" className="nav-link" onClick={logout}>
+                            <i className="nav-icon fas fa-sign-out-alt"></i>
                             <p>
-                            UI Elements
-                            <i className="fas fa-angle-left right" />
+                            Logout
                             </p>
                         </a>
-                        <ul className="nav nav-treeview">
-                            <li className="nav-item">
-                            <a href="pages/UI/general.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>General</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/icons.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Icons</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/buttons.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Buttons</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/sliders.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Sliders</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/modals.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Modals &amp; Alerts</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/navbar.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Navbar &amp; Tabs</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/timeline.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Timeline</p>
-                            </a>
-                            </li>
-                            <li className="nav-item">
-                            <a href="pages/UI/ribbons.html" className="nav-link">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Ribbons</p>
-                            </a>
-                            </li>
-                        </ul>
                         </li>
                         <li className="nav-item">
                         <a href="#" className="nav-link">
@@ -667,4 +625,16 @@ function Sidebar() {
     );
 }
 
-export default Sidebar;
+
+Sidebar =connect(function(state,props){
+    console.log("connect ki state hai",state,"connect props===",props);
+    if(state.AdminReducer?.isloggedin===''){
+        window.location.href = "/admin";
+    }else{
+        return {
+            isloading:state.AdminReducer?.isloading
+        }
+    }
+})(Sidebar) 
+
+export default withRouter(Sidebar);

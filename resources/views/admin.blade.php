@@ -83,5 +83,12 @@
         <script src="{{ asset('admin-lte/dist/js/demo.js') }}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{ asset('admin-lte/dist/js/pages/dashboard.js') }}"></script>
+        <!-- <script>
+            $(function() {
+                window.onbeforeunload = function() {
+                    localStorage.loginstatus = '';
+                }
+            });
+        </script> -->
     </body>
 </html>
