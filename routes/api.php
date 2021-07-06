@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ApiAuthController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register']);
 Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:api');
+
+Route::middleware(['auth:api', 'json.response'])->group(function () {
+    // =============  admin routes  =====================
+    Route::resource('products', ProductController::class);
+
+});

@@ -526,3 +526,26 @@ export default withRouter(Login);//syntax for redux and dispatch
 
 Route::view('/admin/{path?}', 'admin');
 
+## To get JSON response create ForceJsonResponse middleware
+
+- create middleware using following command
+
+php artisan make:middleware ForceJsonResponse
+
+- Register that middleware in app/Http/Kernel.php
+
+protected $middleware = [
+    ...
+    \App\Http\Middleware\ForceJsonResponse::class,
+];
+
+protected $routeMiddleware = [
+    ...
+    'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
+];
+
+- Use that middleware in routes/api.php
+
+Route::middleware(['json.response'])->group(function () {
+    //Your GET AND POST routes goes here
+});

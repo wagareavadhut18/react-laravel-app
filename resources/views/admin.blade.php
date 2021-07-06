@@ -34,7 +34,7 @@
 </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div id="admin"></div>
-                
+
         <!-- jQuery -->
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('admin-lte/plugins/jquery/jquery.min.js') }}"></script>
@@ -83,12 +83,5 @@
         <script src="{{ asset('admin-lte/dist/js/demo.js') }}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{ asset('admin-lte/dist/js/pages/dashboard.js') }}"></script>
-        <!-- <script>
-            $(function() {
-                window.onbeforeunload = function() {
-                    localStorage.loginstatus = '';
-                }
-            });
-        </script> -->
     </body>
 </html>

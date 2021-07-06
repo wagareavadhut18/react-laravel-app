@@ -232,10 +232,10 @@ function Sidebar(props) {
                         </a>
                         <ul className="nav nav-treeview">
                             <li className="nav-item">
-                            <Link to="/admin/product" className="nav-link">
+                            <a href="/admin/product" className="nav-link">
                                 <i className="far fa-circle nav-icon" />
                                 <p>All Products</p>
-                            </Link>
+                            </a>
                             </li>
                         </ul>
                         </li>
@@ -627,7 +627,7 @@ function Sidebar(props) {
 
 
 Sidebar =connect(function(state,props){
-    console.log("connect ki state hai",state,"connect props===",props);
+    // console.log("connect ki state hai",state,"connect props===",props);
     if(state.AdminReducer?.isloggedin===''){
         window.location.href = "/admin";
     }else{

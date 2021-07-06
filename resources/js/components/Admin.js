@@ -19,7 +19,7 @@ function Admin(props) {
                     <Switch>
                         <Route exact path="/admin"><Login /></Route>
                         {localStorage.getItem('loginstatus') ? <Route exact path="/admin/dashboard"><Dashboard /></Route> : <Route exact path="/admin/dashboard"><Redirect to="/admin" /></Route> }
-                        <Route exact path="/admin/product"><Product /></Route>
+                        {localStorage.getItem('loginstatus') ? <Route exact path="/admin/product"><Product /> </Route> : <Route exact path="/admin/product"><Redirect to="/admin" /></Route> }
                     </Switch>
                     <Footer />
                 </div>

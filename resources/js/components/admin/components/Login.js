@@ -118,7 +118,7 @@ function Login(props) {
 
 
 Login =connect(function(state,props){
-    console.log("connect ki state hai",state,"connect props===",props);
+    // console.log("connect ki state hai",state,"connect props===",props);
     if(state.AdminReducer?.isloggedin==="true"){
         window.location.href = "/admin/dashboard";
     }else{
