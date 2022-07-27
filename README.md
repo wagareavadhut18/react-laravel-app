@@ -1,17 +1,18 @@
 ## Using react and passport api
 
 # Installation of react  in laravel commands:-
+```sh
+composer require laravel/ui
 
--composer require laravel/ui
+php artisan ui react
 
--php artisan ui react
+npm i 
 
--npm i 
-
--npm run dev
+npm run dev
+```
 
 - In resources/js/components/components/ folder create your App.js for react like
-
+```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -35,19 +36,20 @@ export default App;
 if (document.getElementById('app')) {
     ReactDOM.render(<App />, document.getElementById('app'));
 }
+```
 
 - Next step is import that App.js in resources/js/app.js as follows
-
+```javascript
 require('./components/App');
-
+```
 - In routes/web.php add following route
-
+```php
 Route::get('/', function () {
     return view('welcome');
 });
-
+```
 - The resources/views/welcome.blade.php file modify by following code
-
+```php
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -67,32 +69,34 @@ Route::get('/', function () {
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
-
+```
 - Then last fire following command to publish all css and js to public folder
-
+```sh
   npm run dev
 
   php artisan serve
-
+```
 
 ## Passport installation
 
 https://laravel.com/docs/8.x/passport
 
+```sh
 composer require laravel/passport
 
 php artisan migrate
 
 php artisan passport:install
-
+```
 - Import trait in User model:-
-
+```php
 use Laravel\Passport\HasApiTokens;
 
 use HasApiTokens, HasFactory, Notifiable;
-
+```
 - Next, you should call the Passport::routes method within the boot method of your App\Providers\AuthServiceProvider. This method will register the routes necessary to issue access tokens and revoke access tokens, clients, and personal access tokens:
 
+```php
 <?php
 
 namespace App\Providers;
@@ -126,9 +130,9 @@ class AuthServiceProvider extends ServiceProvider
         }
     }
 }
-
+```
 - Finally, in your application's config/auth.php configuration file, you should set the driver option of the api authentication guard to passport. This will instruct your application to use Passport's TokenGuard when authenticating incoming API requests:
-
+```php
 'guards' => [
     'web' => [
         'driver' => 'session',
@@ -140,7 +144,7 @@ class AuthServiceProvider extends ServiceProvider
         'provider' => 'users',
     ],
 ],
-
+```
 # Personal Access Tokens
 
 After creating your personal access client, place the client's ID and plain-text secret value in your application's .env file:
@@ -152,10 +156,10 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET="unhashed-client-secret-value"
 
 
 # For Authentication :-
-
+```sh
 php artisan make:controller Auth/ApiAuthController
-
-
+```
+```php
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -211,9 +215,9 @@ class ApiAuthController extends Controller
         return response()->json(['message' => 'You have been successfully logged out!']);
     }
 }
-
+```
 - Change in routes/api.php
-
+```php
 <?php
 
 use Illuminate\Http\Request;
@@ -238,15 +242,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register']);
 Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:api');
-
+```
 ## Formik validation installation:
-
+```sh
 npm install formik;
 
 npm i yup;
+```
 
 - Use in react component as follows:-
-
+```javascript
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -355,14 +360,17 @@ function Login() {
 }
 
 export default Login;
-
+```
 
 ## Make seeder in laravel
 
+```sh
 php artisan make:seeder UserSeeder
+```
 
 - In UserSeeder.php
 
+```php
 <?php
 
 namespace Database\Seeders;
@@ -388,10 +396,11 @@ class UserSeeder extends Seeder
         ]);
     }
 }
-
+```
 
 - In DatabaseSeeder.php
 
+```php
 /**
     * Seed the application's database.
     *
@@ -404,34 +413,44 @@ public function run()
         UserSeeder::class,
     ]);
 }
+```
 
 - To run specific migration -
 
+```sh
 php artisan migrate --path=/database/migrations/my_migration.php
+```
 
 - To run down() method of migration use:
 
+```sh
 php artisan migrate:rollback --path=/database/migrations/my_migration.php
+```
 
 ## Install react-redux :
 
+```sh
 npm i react-redux
 
 npm i redux
 
 npm i redux-thunk
+```
 
 ## Login authentication in react laravel
 
 - Add the following code in Login.js under the formik's validation on submit method
 
+```javascript
 var middlefunction = loginmiddleware({email:values.email,password:values.password});
 props.dispatch(middlefunction);
+```
 
 - Above code is for transfering data from login.js to middleware.js file login function
 
 - Add following code in middleware for login-
 
+```javascript
 import axios from "axios"
 export function loginmiddleware(data){
     return function(dispatch) {
@@ -459,9 +478,11 @@ export function loginmiddleware(data){
             })
     }
 }
+```
 
 - Make AdminReducer.js by following code for dispatches
 
+```javascript
 function AdminReducer(state={
     isloggedin:false,
     // token:localStorage.token,
@@ -496,9 +517,11 @@ function AdminReducer(state={
         }
 }
 export default AdminReducer
+```
 
 - Add following code in store.js file for combining all the reducers:
 
+```javascript
 import {createStore , combineReducers , applyMiddleware} from "redux"
 import AdminReducer from "./AdminReducer";
 
@@ -521,19 +544,25 @@ Login =connect(function(state,props){
 })(Login) 
 
 export default withRouter(Login);//syntax for redux and dispatch
+```
 
 - In routes/web.php add the following code for managing different urls:
 
+```php
 Route::view('/admin/{path?}', 'admin');
+```
 
 ## To get JSON response create ForceJsonResponse middleware
 
 - create middleware using following command
 
+```sh
 php artisan make:middleware ForceJsonResponse
+```
 
 - Register that middleware in app/Http/Kernel.php
 
+```php
 protected $middleware = [
     ...
     \App\Http\Middleware\ForceJsonResponse::class,
@@ -549,3 +578,4 @@ protected $routeMiddleware = [
 Route::middleware(['json.response'])->group(function () {
     //Your GET AND POST routes goes here
 });
+```
